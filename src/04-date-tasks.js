@@ -124,8 +124,11 @@ function angleBetweenClockHands(date) {
  *    getDay(365, false) => "December, 31"
  *    getDay(366, true) => "December, 31"
  */
-function getDay(/* day, isLeap */) {
-  throw new Error('Not implemented');
+function getDay(day, isLeap) {
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'];
+  const date = new Date(Date.UTC(isLeap ? 2000 : 2001, 0, day));
+  return `${months[date.getUTCMonth()]}, ${date.getUTCDate()}`;
 }
 
 module.exports = {
