@@ -319,8 +319,20 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const pairs = {
+    ']': '[', ')': '(', '}': '{', '>': '<',
+  };
+  const stack = [];
+  for (let i = 0; i < str.length; i += 1) {
+    const ch = str[i];
+    if (pairs[ch]) {
+      if (stack.pop() !== pairs[ch]) return false;
+    } else {
+      stack.push(ch);
+    }
+  }
+  return stack.length === 0;
 }
 
 /**
@@ -359,8 +371,15 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const parts = pathes[0].split('/');
+  const common = [];
+  for (let i = 0; i < parts.length; i += 1) {
+    if (!pathes.every((p) => p.split('/')[i] === parts[i])) break;
+    common.push(parts[i]);
+  }
+  const result = common.join('/');
+  return result ? `${result}/` : '';
 }
 
 /**
@@ -381,8 +400,8 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  return m1.map((row) => m2[0].map((_, j) => row.reduce((sum, val, k) => sum + val * m2[k][j], 0)));
 }
 
 /**
@@ -415,8 +434,17 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const lines = [
+    [[0, 0], [0, 1], [0, 2]], [[1, 0], [1, 1], [1, 2]], [[2, 0], [2, 1], [2, 2]],
+    [[0, 0], [1, 0], [2, 0]], [[0, 1], [1, 1], [2, 1]], [[0, 2], [1, 2], [2, 2]],
+    [[0, 0], [1, 1], [2, 2]], [[0, 2], [1, 1], [2, 0]],
+  ];
+  const win = lines.find(([a, b, c]) => {
+    const v = position[a[0]][a[1]];
+    return v && v === position[b[0]][b[1]] && v === position[c[0]][c[1]];
+  });
+  return win ? position[win[0][0]][win[0][1]] : undefined;
 }
 
 module.exports = {
