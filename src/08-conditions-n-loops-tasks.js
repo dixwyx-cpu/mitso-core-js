@@ -379,7 +379,8 @@ function getCommonDirectoryPath(pathes) {
     common.push(parts[i]);
   }
   const result = common.join('/');
-  return result ? `${result}/` : '';
+  if (!common.length) return '';
+  return `${result}/`;
 }
 
 /**
